@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import InstanFootBar from '../component/InstanFootBar'
+import Cityitem from '../component/Cityitem'
 import CityList from '../component/CityList'
 
 export default class App extends Component {
@@ -20,7 +21,7 @@ export default class App extends Component {
   render() {
     return (
         <View style={styles.container}>
-            <CityList/>
+            <CityList />
         </View>
     );
   }
