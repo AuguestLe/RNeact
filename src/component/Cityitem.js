@@ -8,67 +8,125 @@ import {
     TouchableOpacity,
     FlatListItem,
     ToastAndroid,
-    View
+    View,
+    ScrollView 
 } from 'react-native';
-import {  Button, Menu, ActivityIndicator, NavBar } from 'antd-mobile';
+import {  List, Drawer } from 'antd-mobile';
 import NetUtil from '../data/NetUtil';
-
+import CityList from './CityList';
 const {width,height} = Dimensions.get('window');
 
 export default class Cityitem extends Component {
-    constructor(props) {
-        super(props);
+    constructor(props){
+        super(props)
         this.state ={
-            cities: [],
-            refreshing: false
+            data:[],
+            cities:[],
+            open:false,
+            params:{
+                op:'GetProvJson',
+                tokenID: '6',
+                userid:'3',
+                sign:'600D3600068B4E2D23C37105BE135D4F'
+            }
         }
     }
-    componentDidMount (){
-        let params = {
-            op:'GetProvJson',
-            tokenID: '6',
-            userid:'3',
-            sign:'600D3600068B4E2D23C37105BE135D4F'
-        }
+    _onPressItem = (item)=>{
+        this.setState({
+            open:false
+        })
+    }
+    _keyExtractor = (item, index) => index;
+    _renderItem=({item}) =>{
+        return(
+            <TouchableOpacity
+                id={item.key}
+                onPress={()=>this._onPressItem(item)}
+                style={item.checkeds ? styles.itemactive : styles.item}
+            >
+                <Text style={item.checkeds ? styles.itemactiveChid : null}>{ item.Name}</Text>
+            </TouchableOpacity>
+        )    
+    }
+    _hanlePress=(item)=>{
+        console.log(item);
         let _this = this;
-        NetUtil.post('/api/AreaCity/GetAreaCity',params,function(res){
-            res.Data.map((item)=>{
-                item.label=item.Name;
-                item.value=item.Id;
+        let Cytis = this.state.cities;
+        Cytis.map((liks)=>{
+            if(liks === item){
+                liks.checkeds = true
+            }else{
+                liks.checkeds = false
+            }
+        })
+        let data = Object.assign([],this.state.cities,Cytis)
+        let parse = this.state.params;
+        parse.op = 'GetCityJson';
+        parse.provId = String(item.Id);
+        NetUtil.post('/api/AreaCity/GetAreaCity',parse,function(res){
+            console.log(res);
+            _this.setState({
+                data:res.Data,
+                cities: data,
+                open: true
             })
+        }) 
+    }
+    componentDidMount (){
+        let _this = this;
+        NetUtil.post('/api/AreaCity/GetAreaCity',this.state.params,function(res){
             _this.setState({
                 cities:res.Data
             })
-            console.log(res.Data)
-        }) 
+        })  
     } 
-    render() {
-        const menuEl = (
-            <Menu style={styles.singlefoomenu} 
-                className='singlefoomenu'
-                data={this.cities}
-                level={1}
-                height={height}
-            />
-        );
-        const loadingEl = (
-            <div style={{ position: 'absolute', width: '100%', height: height * 0.6, display: 'flex', justifyContent: 'center' }}>
-                <ActivityIndicator size="large" />
-            </div>
+    render(){
+        console.log(2)
+        return(
+            <Drawer
+                style={styles.myDrawer}
+                className="myDrawer"
+                position={'right'}
+                drawerWidth={200}
+                enableDragHandle
+                contentStyle={{color:'#a6a6a6',textAlign:'center',paddingTop:42}}
+                sidebar={(
+                    <FlatList 
+                        style={styles.flatl}
+                        data={this.state.data}
+                        extraData={ this.state }
+                        keyExtractor={ this._keyExtractor }
+                        renderItem ={ this._renderItem}
+                    />
+                )}
+                open={this.state.open}
+                >
+                <CityList 
+                    handlePress={this._hanlePress}
+                    cities={this.state.cities}
+                />
+                
+            </Drawer>  
         )
-        return (
-            <View style={styles.container}>
-                <Button>我出来了</Button>
-                { this.state.cities ? menuEl : loadingEl }
-            </View>
-        );
     }
 }
 
 const styles = StyleSheet.create({
+    myDrawer: {
+        position: 'absolute',
+        top:0,
+        left:0,
+        zIndex: 999,
+        flex:1,
+        backgroundColor:'#fff'
+    },
     container: {
         flex: 1,
         backgroundColor: '#F3F3F3',
+    },
+    containers: {
+        flex: 1,
+        backgroundColor: '#000',
     },
     singlefoomenu:{
         position:'absolute',

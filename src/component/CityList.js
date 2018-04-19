@@ -12,69 +12,31 @@ import {
 } from 'react-native';
 import {  Button } from 'native-base';
 import NetUtil from '../data/NetUtil';
-
 const {width,height} = Dimensions.get('window');
 export default class CityList extends React.PureComponent {
-    constructor(props) {
-        super(props);
-        this.state ={
-            cities: [],
-            addClass:false
-        }
-    }
     _keyExtractor = (item, index) => index;
-    _onPressItem = (item) => {
-        let Cytis = this.state.cities;
-        Cytis.map((liks)=>{
-            if(liks === item){
-                liks.checkeds = true
-            }else{
-                liks.checkeds = false
-            }
-        })
-        let data = Object.assign([],this.state.cities,Cytis)
-        this.setState({
-            cities:data,
-        })
-    };
-
     _renderItem = ({item}) =>{
         return(
             <TouchableOpacity
                 id={item.Id}
-                onPress={()=>this._onPressItem(item)}
+                onPress={()=> this.props.handlePress(item)}
                 style={item.checkeds ? styles.itemactive : styles.item}
             >
                 <Text style={item.checkeds ? styles.itemactiveChid : null}>{ item.Name}</Text>
             </TouchableOpacity>
         )    
     }
-    componentDidMount (){
-        let params = {
-            op:'GetProvJson',
-            tokenID: '6',
-            userid:'3',
-            sign:'600D3600068B4E2D23C37105BE135D4F'
-        }
-        let _this = this;
-        NetUtil.post('/api/AreaCity/GetAreaCity',params,function(res){
-            _this.setState({
-                cities:res.Data
-            })
-        }) 
-    } 
     render() {
-       
         return (
             <View style={styles.container}>
-                <FlatList 
-                    data={this.state.cities}
-                    extraData={ this.state }
-                    keyExtractor={ this._keyExtractor }
-                    renderItem ={ this._renderItem}
-                    refreshing={ this.state.refreshing }
-
-                />
+                <View style={styles.fals}>
+                    <FlatList 
+                        data={this.props.cities}
+                        extraData={ this.props }
+                        keyExtractor={ this._keyExtractor }
+                        renderItem ={ this._renderItem}
+                    />
+                 </View>
             </View>
         );
     }
@@ -82,8 +44,23 @@ export default class CityList extends React.PureComponent {
 
 const styles = StyleSheet.create({
     container: {
+        position: 'relative',
         flex: 1,
         backgroundColor: '#F3F3F3',
+    },
+    fals:{
+        position: 'absolute',
+        width:width,
+        top:0,
+        left:0,
+        backgroundColor:'#fff'
+    },
+    falsouter:{
+        position: 'absolute',
+        top:0,
+        left:0,
+        zIndex: 999,
+        backgroundColor:'#fff'
     },
     item: {
         height:40,
