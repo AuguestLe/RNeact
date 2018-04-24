@@ -6,11 +6,16 @@ import {
   Image,
   TextInput,
   Dimensions,
+  TouchableOpacity,
   View
 } from 'react-native';
 import {  Button } from 'native-base';
+import { Stacknavigator } from 'react-navigation';
 
 const {width,height} = Dimensions.get('window');
+
+
+
 import rightBack from '../source/PublicImage/fastOnlineJianTou.png';
 
 export default class Instanguzi extends Component {
@@ -19,18 +24,18 @@ export default class Instanguzi extends Component {
         <View style={styles.container}>
             <View style={[styles.instItem,styles.margint]}>
                 <Text>品牌车型</Text>
-                <View style={styles.instItemRit}>
+                <TouchableOpacity style={styles.instItemRit}>
                     <Text style={styles.defauFont}>请选择品牌车型</Text>
                     <Image style={styles.instItemRitImg} source ={rightBack}/>
-                </View>
+                </TouchableOpacity>
             </View>
             <View style={styles.instItem}>
                 <Text>上牌时间</Text>
-                <View style={styles.instItemRit}>
+                <TouchableOpacity style={styles.instItemRit}>
                     
                     <Text style={styles.defauFont}>请选择品牌车型</Text>
                     <Image style={styles.instItemRitImg} source ={rightBack}/>
-                </View>
+                </TouchableOpacity>
             </View>
             <View style={styles.instItem}>
                 <Text>行驶公里</Text>
@@ -46,10 +51,10 @@ export default class Instanguzi extends Component {
             </View>
             <View style={styles.instItem}>
                 <Text>上牌地区</Text>
-                <View style={styles.instItemRit}>
-                    <Text style={styles.defauFont}>请选择品牌车型</Text>
+                <TouchableOpacity style={styles.instItemRit}>
+                    <Text style={styles.defauFont}>请选择上牌地区</Text>
                     <Image style={styles.instItemRitImg} source ={rightBack}/>
-                </View>
+                </TouchableOpacity>
             </View>
             <View style={styles.buttonBox}>
                 <Button block style={styles.inButton}>

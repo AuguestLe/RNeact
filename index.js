@@ -1,4 +1,17 @@
+import React, { Component  } from 'react';
 import { AppRegistry } from 'react-native';
-import App from './src';
+import { Stacknavigator } from 'react-navigation';
+import InstanFootBar from './src/component/InstanFootBar';
+import Instanguzi from './src/component/Instanguz';
+import Cityitem from './src/component/Cityitem';
 
-AppRegistry.registerComponent('pg2', () => App);
+const SimpleApp = Stacknavigator({
+    Home: {
+        screen: InstanFootBar
+    },
+    Cityitem: {
+        screen: Cityitem
+    }
+});
+
+AppRegistry.registerComponent('pg2', () => SimpleApp);

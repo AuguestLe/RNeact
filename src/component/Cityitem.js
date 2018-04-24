@@ -81,7 +81,6 @@ export default class Cityitem extends Component {
         })  
     } 
     render(){
-        console.log(2)
         return(
             <Drawer
                 style={styles.myDrawer}

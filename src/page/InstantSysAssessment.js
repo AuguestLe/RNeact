@@ -6,22 +6,20 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
+import { Stacknavigator } from 'react-navigation';
 
 import InstanFootBar from '../component/InstanFootBar'
 import Cityitem from '../component/Cityitem'
 import CityList from '../component/CityList'
 
 export default class App extends Component {
-    constructor(){
-        super()
-        this.state = {
-            page: 'HomeScreen'
-        }
+    static navigationOptions = {
+        title: '哈哈哈哈'
     }
   render() {
     return (
         <View style={styles.container}>
-            <Cityitem />
+            <InstanFootBar />
         </View>
     );
   }
