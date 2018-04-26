@@ -12,10 +12,7 @@ import InstanFootBar from '../component/InstanFootBar'
 import Cityitem from '../component/Cityitem'
 import CityList from '../component/CityList'
 
-export default class App extends Component {
-    static navigationOptions = {
-        title: '哈哈哈哈'
-    }
+export default class InstantSysAssessment extends Component {
   render() {
     return (
         <View style={styles.container}>

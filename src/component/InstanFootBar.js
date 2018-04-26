@@ -5,11 +5,13 @@ import {
     Image,
     Text
 } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 import TabNavigator from 'react-native-tab-navigator';
 import Instanguzi from './Instanguz'
 import InstanVin from './InstanVin'
+import Cityitem from './Cityitem'
 
-export default class InstanFootBar extends Component {
+class InstanFootBars extends Component {
     constructor(props){
         super(props);
         this.state= {
@@ -28,7 +30,7 @@ export default class InstanFootBar extends Component {
                     renderSelectedIcon ={() =><Image style={[styles.icon,{tintColor:'#63B8FF'}]} source={require('../source/UsedCarValuation/valuation_dollars_blue.png')}/>}
                     onPress={()=>this.setState({selectedTab:'popular'})}
                     >
-                    <Instanguzi/>
+                    <Instanguzi navgatio= {this.props.navigation}/>
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     selected= {this.state.selectedTab==='trending'}
@@ -38,7 +40,7 @@ export default class InstanFootBar extends Component {
                     renderSelectedIcon ={() =><Image style={[styles.icon,{tintColor:'#63B8FF'}]} source={require('../source/UsedCarValuation/valuatin_VIN_blue.png')}/>}
                     onPress={()=>this.setState({selectedTab:'trending'})}
                     >
-                   <InstanVin/>
+                   <InstanVin  />
                 </TabNavigator.Item>
             </TabNavigator>
         );
@@ -51,4 +53,20 @@ const styles = StyleSheet.create({
         backgroundColor:'#fff'
     }
 });
+const InstanFootBar = StackNavigator({
+    Main: {
+        screen:InstanFootBars,
+    },
+    cityItem: {
+        screen: Cityitem,
+        navigationOptions:{
+            header:null
+        }
+    },
+    Instanguzis:{
+        screen:Instanguzi
+    }
+})
+module.exports = InstanFootBar;
+
 

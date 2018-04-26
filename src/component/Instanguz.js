@@ -10,16 +10,15 @@ import {
   View
 } from 'react-native';
 import {  Button } from 'native-base';
-import { Stacknavigator } from 'react-navigation';
-
-const {width,height} = Dimensions.get('window');
-
-
+import { StackNavigator } from 'react-navigation';
 
 import rightBack from '../source/PublicImage/fastOnlineJianTou.png';
 
+const {width,height} = Dimensions.get('window');
+
 export default class Instanguzi extends Component {
   render() {
+    const navigates =this.props.navgatio.navigate;
     return (
         <View style={styles.container}>
             <View style={[styles.instItem,styles.margint]}>
@@ -51,7 +50,7 @@ export default class Instanguzi extends Component {
             </View>
             <View style={styles.instItem}>
                 <Text>上牌地区</Text>
-                <TouchableOpacity style={styles.instItemRit}>
+                <TouchableOpacity style={styles.instItemRit} onPress={()=> navigates('cityItem')}>
                     <Text style={styles.defauFont}>请选择上牌地区</Text>
                     <Image style={styles.instItemRitImg} source ={rightBack}/>
                 </TouchableOpacity>
@@ -70,6 +69,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F3F3F3',
+    zIndex: 999,
   },
   instItem: {
     height:40,

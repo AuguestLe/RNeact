@@ -49,7 +49,6 @@ export default class Cityitem extends Component {
         )    
     }
     _hanlePress=(item)=>{
-        console.log(item);
         let _this = this;
         let Cytis = this.state.cities;
         Cytis.map((liks)=>{
@@ -111,13 +110,14 @@ export default class Cityitem extends Component {
 }
 
 const styles = StyleSheet.create({
-    myDrawer: {
-        position: 'absolute',
-        top:0,
-        left:0,
+    flatl:{
         zIndex: 999,
-        flex:1,
-        backgroundColor:'#fff'
+        height:900,
+    },
+    myDrawer: {
+        backgroundColor:'#fff',
+        height:900,
+        zIndex: 999,
     },
     container: {
         flex: 1,
