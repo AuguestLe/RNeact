@@ -28,7 +28,8 @@ export default class Cityitem extends Component {
                 tokenID: '6',
                 userid:'3',
                 sign:'600D3600068B4E2D23C37105BE135D4F'
-            }
+            },
+            cityName:''
         }
     }
     _onPressItem = (item)=>{
@@ -38,10 +39,12 @@ export default class Cityitem extends Component {
     }
     _keyExtractor = (item, index) => index;
     _renderItem=({item}) =>{
+        const Prentpress = this.props.navigation.state.params.Prentpress;
+        item.cityName = this.state.cityName+' '+item.Name;
         return(
             <TouchableOpacity
                 id={item.key}
-                onPress={()=>this._onPressItem(item)}
+                onPress={()=>Prentpress(item)}
                 style={item.checkeds ? styles.itemactive : styles.item}
             >
                 <Text style={item.checkeds ? styles.itemactiveChid : null}>{ item.Name}</Text>
@@ -63,11 +66,11 @@ export default class Cityitem extends Component {
         parse.op = 'GetCityJson';
         parse.provId = String(item.Id);
         NetUtil.post('/api/AreaCity/GetAreaCity',parse,function(res){
-            console.log(res);
             _this.setState({
                 data:res.Data,
                 cities: data,
-                open: true
+                open: true,
+                cityName: item.Name
             })
         }) 
     }
@@ -94,7 +97,7 @@ export default class Cityitem extends Component {
                         data={this.state.data}
                         extraData={ this.state }
                         keyExtractor={ this._keyExtractor }
-                        renderItem ={ this._renderItem}
+                        renderItem ={ this._renderItem.bind(this)}
                     />
                 )}
                 open={this.state.open}
@@ -118,18 +121,6 @@ const styles = StyleSheet.create({
         backgroundColor:'#fff',
         height:900,
         zIndex: 999,
-    },
-    container: {
-        flex: 1,
-        backgroundColor: '#F3F3F3',
-    },
-    containers: {
-        flex: 1,
-        backgroundColor: '#000',
-    },
-    singlefoomenu:{
-        position:'absolute',
-        width:width
     },
     item: {
         height:40,

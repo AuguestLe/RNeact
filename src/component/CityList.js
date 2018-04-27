@@ -28,16 +28,12 @@ export default class CityList extends React.PureComponent {
     }
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.fals}>
-                    <FlatList 
-                        data={this.props.cities}
-                        extraData={ this.props }
-                        keyExtractor={ this._keyExtractor }
-                        renderItem ={ this._renderItem}
-                    />
-                 </View>
-            </View>
+            <FlatList 
+                data={this.props.cities}
+                extraData={ this.props }
+                keyExtractor={ this._keyExtractor }
+                renderItem ={ this._renderItem}
+            />
         );
     }
 }

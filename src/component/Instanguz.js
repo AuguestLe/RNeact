@@ -17,6 +17,19 @@ import rightBack from '../source/PublicImage/fastOnlineJianTou.png';
 const {width,height} = Dimensions.get('window');
 
 export default class Instanguzi extends Component {
+    constructor(props){
+        super(props)
+        this.state={
+            shangpai:'请选择上牌地区'
+        }
+    }
+    _onPress=(item)=>{
+        console.log(item)
+        this.setState({
+            shangpai: item.cityName
+        })
+        this.props.navgatio.goBack(null);
+    }
   render() {
     const navigates =this.props.navgatio.navigate;
     return (
@@ -50,8 +63,8 @@ export default class Instanguzi extends Component {
             </View>
             <View style={styles.instItem}>
                 <Text>上牌地区</Text>
-                <TouchableOpacity style={styles.instItemRit} onPress={()=> navigates('cityItem')}>
-                    <Text style={styles.defauFont}>请选择上牌地区</Text>
+                <TouchableOpacity style={styles.instItemRit} onPress={()=> navigates('cityItem',{Prentpress: (item)=>this._onPress(item),open: this.state.open})}>
+                    <Text style={styles.defauFont}>{this.state.shangpai}</Text>
                     <Image style={styles.instItemRitImg} source ={rightBack}/>
                 </TouchableOpacity>
             </View>
